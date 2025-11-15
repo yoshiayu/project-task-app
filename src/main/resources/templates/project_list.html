@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja" th:replace="~{layout :: layout(~{::content})}">
+
+<body>
+	<div th:fragment="content">
+		<h2>案件一覧</h2>
+
+		<div class="toolbar">
+			<a th:href="@{/projects/new}" class="btn">案件登録</a>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>案件名</th>
+					<th>ステータス</th>
+					<th>期間</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="p : ${projects}">
+					<td th:text="${p.id}">1</td>
+					<td th:text="${p.name}">案件名</td>
+					<td th:text="${p.status}">ACTIVE</td>
+					<td>
+						<span th:text="${p.startDate}">2025-01-01</span>
+						〜
+						<span th:text="${p.endDate}">2025-03-31</span>
+					</td>
+					<td>
+						<a th:href="@{|/projects/${p.id}/edit|}">編集</a>
+					</td>
+				</tr>
+				<tr th:if="${#lists.isEmpty(projects)}">
+					<td colspan="5">案件が登録されていません。</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>

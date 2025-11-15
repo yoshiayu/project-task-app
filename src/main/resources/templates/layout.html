@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja" th:fragment="layout(content)">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${pageTitle} ?: 'Project Task Manager'">Project Task Manager</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+	<header class="header">
+		<h1>案件・タスク進捗管理</h1>
+		<nav>
+			<a th:href="@{/projects}">案件一覧</a> |
+			<a th:href="@{/tasks}">タスク一覧</a>
+		</nav>
+	</header>
+
+	<main class="content">
+		<div th:insert="${content}"></div>
+	</main>
+
+	<footer class="footer">
+		<small>&copy; Project Task Manager Sample</small>
+	</footer>
+</body>
+
+</html>

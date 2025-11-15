@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja" th:replace="~{layout :: layout(~{::content})}">
+
+<body>
+	<div th:fragment="content">
+		<h2>タスク一覧</h2>
+
+		<form method="get" th:action="@{/tasks}" class="search-form">
+			<label>案件:
+				<select name="projectId">
+					<option value="">（全案件）</option>
+					<option th:each="p : ${projects}" th:value="${p.id}" th:selected="${p.id} == ${selectedProjectId}"
+						th:text="${p.name}">案件</option>
+				</select>
+			</label>
+
+			<label>ステータス:
+				<select name="status">
+					<option value="">（全ステータス）</option>
+					<option th:each="s : ${statuses}" th:value="${s}" th:selected="${s} == ${selectedStatus}"
+						th:text="${s}">TODO</option>
+				</select>
+			</label>
+
+			<button type="submit">検索</button>
+			<a th:href="@{/tasks}">リセット</a>
+		</form>
+
+		<div class="toolbar">
+			<a th:href="@{/tasks/new}" class="btn">タスク登録</a>
+		</div>
+
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>案件</th>
+					<th>タイトル</th>
+					<th>担当者</th>
+					<th>期限</th>
+					<th>ステータス</th>
+					<th>優先度</th>
+					<th>見積(h)</th>
+					<th>実績(h)</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="t : ${tasks}">
+					<td th:text="${t.id}">1</td>
+					<td th:text="${t.project.name}">案件名</td>
+					<td th:text="${t.title}">タスク名</td>
+					<td th:text="${t.assignee}">担当者</td>
+					<td th:text="${t.dueDate}">2025-02-01</td>
+					<td th:text="${t.status}">TODO</td>
+					<td th:text="${t.priority}">HIGH</td>
+					<td th:text="${t.estimatedHours}">10.0</td>
+					<td th:text="${t.actualHours}">2.0</td>
+					<td>
+						<a th:href="@{|/tasks/${t.id}/edit|}">編集</a>
+					</td>
+				</tr>
+				<tr th:if="${#lists.isEmpty(tasks)}">
+					<td colspan="10">タスクが登録されていません。</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
